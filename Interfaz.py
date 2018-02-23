@@ -1,6 +1,6 @@
 import wx
 import os
-
+from Concordancias import Searcher
 
 wildcard = "Text File (*.txt)|*.txt|" \
             "All files (*.*)|*.*"
@@ -50,7 +50,10 @@ class MiFrame(wx.Frame):
         dlg.Destroy()
 
     def SearchConcordance(self,event):
-        print("Concordance")
+        print(self.text.GetLabelText())
+        path = self.text.GetLabelText()
+        text = Searcher()
+        print(text.readFile(path))
 
 
 if __name__ == '__main__':
