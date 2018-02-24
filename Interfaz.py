@@ -21,19 +21,20 @@ class MiFrame(wx.Frame):
         # Inputs
         self.text = wx.TextCtrl(self, wx.ID_ANY, pos=(150, 10), size=(180, 25))
         self.result = wx.TextCtrl(self,wx.ID_ANY,pos=(20,60),size=(450,250),style=wx.TE_MULTILINE)
+        self.word = wx.TextCtrl(self,)
 
         # Botones
         self.open = wx.Button(self, wx.ID_ANY, "Abrir", pos=(350, 10), size=(80, 30))
-        self.open.Bind(wx.EVT_BUTTON,self.OpenFile)
+        self.open.Bind(wx.EVT_BUTTON,self.openFile)
         self.search = wx.Button(self, wx.ID_ANY, "Buscar", pos=(350, 320), size=(120, 30))
-        self.search.Bind(wx.EVT_BUTTON,self.SearchConcordance)
+        self.search.Bind(wx.EVT_BUTTON,self.searchConcordance)
 
 
         self.Centre(True)
         self.Show()
 
     #Abrir explorador de archivos
-    def OpenFile(self,event):
+    def openFile(self,event):
         dlg = wx.FileDialog(
             self, message="Seleccione un archivo",
             defaultDir=self.currentDirectory,
@@ -48,12 +49,12 @@ class MiFrame(wx.Frame):
                 self.text.SetLabelText(fileSelected)
         dlg.Destroy()
 
-    def SearchConcordance(self,event):
+    def searchConcordance(self,event):
         path = self.text.GetLabelText()
         text = Searcher()
 
-        returnResult = text.searchConc(path)
-        resSplit = returnResult.split('\n')
+        returnResult = (text.searchConc(path))
+        resSplit = returnResult.split("',")
         print(returnResult)
 
         for i in resSplit:
