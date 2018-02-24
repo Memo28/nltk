@@ -20,7 +20,7 @@ class MiFrame(wx.Frame):
 
         # Inputs
         self.text = wx.TextCtrl(self, wx.ID_ANY, pos=(150, 10), size=(180, 25))
-        self.result = wx.TextCtrl(self,wx.ID_ANY,pos=(20,60),size=(450,250))
+        self.result = wx.TextCtrl(self,wx.ID_ANY,pos=(20,60),size=(450,250),style=wx.TE_MULTILINE)
 
         # Botones
         self.open = wx.Button(self, wx.ID_ANY, "Abrir", pos=(350, 10), size=(80, 30))
@@ -43,21 +43,25 @@ class MiFrame(wx.Frame):
             )
         if dlg.ShowModal() == wx.ID_OK:
             paths = dlg.GetPaths()
-            print ("Archivo seleccionado")
             for path in paths:
                 fileSelected = path
                 self.text.SetLabelText(fileSelected)
         dlg.Destroy()
 
     def SearchConcordance(self,event):
-        print(self.text.GetLabelText())
         path = self.text.GetLabelText()
         text = Searcher()
-        print(text.readFile(path))
 
+        returnResult = text.searchConc(path)
+        resSplit = returnResult.split('\n')
+        print(returnResult)
+
+        for i in resSplit:
+            self.result.AppendText(i+"\n")
 
 if __name__ == '__main__':
     app = wx.App()
     fr = MiFrame(None, -1, "wxPython App", size=(500, 400))
     app.MainLoop()
+
 
