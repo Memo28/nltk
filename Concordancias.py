@@ -53,7 +53,8 @@ class Searcher(object):
         return root.stem(word)
 
 
-    #Metodo que obtiene las cooncordacias
+    #Metodo que obtiene las cooncordacias tomado de
+    #https://simply-python.com/2014/03/14/saving-output-of-nltk-text-concordance/
     def get_all_phrases_containing_tar_wrd(self,target_word, tar_passage, left_margin, right_margin):
 
         tokens = nltk.word_tokenize(tar_passage)

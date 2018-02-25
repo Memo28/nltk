@@ -17,11 +17,12 @@ class MiFrame(wx.Frame):
         # Etiquetas ...
         self.labelA = wx.StaticText(self, wx.ID_ANY, "Archivo seleccionado...", pos=(10, 15), size=(130, 15))
         self.labelB = wx.StaticText(self, wx.ID_ANY, "Resultado", pos=(200, 40), size=(80, 15))
+        self.labelC = wx.StaticText(self,wx.ID_ANY, "Palabra a buscar:",pos=(30,325),size=(100,15))
 
         # Inputs
-        self.text = wx.TextCtrl(self, wx.ID_ANY, pos=(150, 10), size=(180, 25))
+        self.text = wx.TextCtrl(self, wx.ID_ANY, pos=(150, 10), size=(180, 25), style = wx.TE_READONLY)
         self.result = wx.TextCtrl(self,wx.ID_ANY,pos=(20,60),size=(450,250),style=wx.TE_MULTILINE)
-        self.word = wx.TextCtrl(self,)
+        self.word = wx.TextCtrl(self,wx.ID_ANY,pos = (145,320),size = (180,25))
 
         # Botones
         self.open = wx.Button(self, wx.ID_ANY, "Abrir", pos=(350, 10), size=(80, 30))
@@ -49,16 +50,43 @@ class MiFrame(wx.Frame):
                 self.text.SetLabelText(fileSelected)
         dlg.Destroy()
 
+    #LLamada a la clase Concordance para operaciones dentro del archivo
     def searchConcordance(self,event):
         path = self.text.GetLabelText()
-        text = Searcher()
+        word = self.word.GetValue()
 
-        returnResult = (text.searchConc(path))
-        resSplit = returnResult.split("',")
-        print(returnResult)
+        #Verificamos que se haya seleccionado el archivo
+        if(self.checkIsNotEmpty(path)):
+            if(self.checkIsNotEmpty(word)):
+                self.result.Clear()
+                self.word.Clear()
 
-        for i in resSplit:
-            self.result.AppendText(i+"\n")
+                text = Searcher()
+                returnResult = (text.searchConc(path,word))
+                #Hacemos el Split para mostrar de una manera mas ordenada los datos
+                resSplit = returnResult.split("',")
+                #print(returnResult)
+
+                for i in resSplit:
+                    self.result.AppendText(i + "\n")
+            else:
+                self.messageDetail("Escriba una palabra")
+        else:
+            self.messageDetail("Seleeciona un archivo")
+
+    def checkIsNotEmpty(self,path):
+        if not path:
+            #Si esta vacia regresamos False para que no pase
+            print("true")
+            return False
+        else:
+            #Si se tiene algo regresamos True para que siga el proceso
+            print("false")
+            return True
+
+    def messageDetail(self,message):
+        wx.MessageBox(message, 'Error', wx.OK | wx.ICON_ERROR)
+
 
 if __name__ == '__main__':
     app = wx.App()
