@@ -5,7 +5,7 @@ class Searcher(object):
 
     #Leemos el archivo proveniente de la interfaz
     def readFile(self,path):
-        with open(path,"r") as archivo:
+        with open(path,"r",encoding="utf8") as archivo:
             texto = archivo.read()
         return texto
 
