@@ -30,7 +30,7 @@ class Searcher(object):
         text = self.readFile(path)
         word = self.getRoot(word)
         print(word)
-        results = self.get_all_phrases_containing_tar_wrd(word, text,5,5)
+        results = self.get_all_phrases_containing_tar_wrd(word, text,15,15)
 
         info = ""
         for result in results:

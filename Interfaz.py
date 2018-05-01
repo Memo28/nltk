@@ -54,6 +54,7 @@ class MiFrame(wx.Frame):
     def searchConcordance(self,event):
         path = self.text.GetLabelText()
         word = self.word.GetValue()
+        word = word.strip()
 
         #Verificamos que se haya seleccionado el archivo
         if(self.checkIsNotEmpty(path)):
