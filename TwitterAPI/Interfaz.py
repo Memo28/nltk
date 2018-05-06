@@ -1,10 +1,6 @@
 import wx
 import os
-
-wildcard = "Text File (*.txt)|*.txt|" \
-            "All files (*.*)|*.*"
-fileSelected = "";
-
+from APICall import Searcher
 
 class MiFrame(wx.Frame):
     def __init__(self, *args, **kwargs):
@@ -16,9 +12,6 @@ class MiFrame(wx.Frame):
                   'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco',
                   'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas'
         ] 
-
-
-        self.currentDirectory = os.getcwd()
 
 
         # Etiquetas ...
@@ -37,14 +30,16 @@ class MiFrame(wx.Frame):
 
 
         #ComboBox
-        self.word = wx.ComboBox(self,wx.ID_ANY,pos = (70,305),size = (180,25), choices = states ,style=wx.CB_READONLY)
+        self.comboBox = wx.ComboBox(self,wx.ID_ANY,pos = (70,305),size = (180,25), choices = states ,style=wx.CB_READONLY)
+        self.comboBox.Bind(wx.EVT_COMBOBOX,self.onSelect)
 
 
         self.Centre(True)
         self.Show()
 
     def searchTweets(self,event):
-        print("Search")
+        stateSelection = self.comboBox.GetStringSelection();
+        print(stateSelection)
 
     def saveTweets():
         print("Save")
