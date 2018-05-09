@@ -24,7 +24,7 @@ class APISearcher(object):
 		for tweet in tweepy.Cursor(api.search,q="*",geocode=str(coords.latitude)+","+str(coords.longitude)+",50km").items(NItems):
 					    result = result + tweet.text + "\n"
 					    #saveFile.write("%s\n"%(tweet.text))
-					    print(tweet.text.encode("utf-8"))
+					    #print(tweet.text.encode("utf-8"))
 		return result
 
 
@@ -34,10 +34,11 @@ class APISearcher(object):
 		return location
 
 
- consumer_key = 'YOUR_COSTUMER_KEY'
- consumer_secret = 'YOUR_COSTUMER_SECRET_KEY'
- access_token = 'YOUR_ACCESS_TOKEN'
- access_secret = 'YOUR_ACCESS_SECRET_TOKEN'auth = OAuthHandler(consumer_key, consumer_secret)
+consumer_key = "no2bqgDggX45CSpYALZl7k1Gq"
+consumer_secret = 'xjuPhPHgxUgBsuj2XOygxFQpe2ZtNWooolUlSSOAayd97xnpga'
+access_token = '991396655692890112-SGeKQWVyd23gi1fWKC5EfS9q0Dt9kSC'
+access_secret = '7AMgrXVhixngXY2Vrua6RwBl0L2OZjVfYjr9ue56RkjPB'
+auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tweepy.API(auth)
 

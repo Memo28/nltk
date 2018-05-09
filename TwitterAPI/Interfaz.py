@@ -40,16 +40,37 @@ class MiFrame(wx.Frame):
     def searchTweets(self,event):
         call = APISearcher()
         stateSelection = self.comboBox.GetStringSelection()
-        tweets = call.Search(stateSelection,10);
-        self.result.AppendText(tweets)
+        if(self.checkIsEmpty(stateSelection)):
+            tweets = call.Search(stateSelection,5)
+            self.saveBtn.Enable()
+            self.result.AppendText(tweets)
 
-    def saveTweets():
-        print("Save")
+        else:
+            print("Error")
 
+
+    def checkIsEmpty(self,text):
+        if not text:
+            return False
+        else:
+            return True
+
+    def saveTweets(self,event):
+        dlg = wx.TextEntryDialog(self, 'Introduzca el nombre del archivo(".txt",".csv")','Guardar tweets')
+        if dlg.ShowModal() == wx.ID_OK:
+            if self.checkIsEmpty(dlg.GetValue()):
+                #Guardamos el archivo con el nombre seleccionado
+                self.saveFile(dlg.GetValue())
+            else:
+                wx.MessageBox("Nombre invalido","Error",wx.OK | wx.ICON_ERROR)
+        dlg.Destroy()
+
+    def saveFile(self,name):
+        file = open(name, 'a', encoding='utf-8')
+        file.write(self.result.GetValue())
 
 if __name__ == '__main__':
     app = wx.App()
-    saveFile = open('tweetFile.txt', 'a', encoding='utf-8')
     fr = MiFrame(None, -1, "Twitter API", size=(500, 400))
     app.MainLoop()
 
