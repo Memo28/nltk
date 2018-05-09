@@ -1,6 +1,8 @@
 import wx
 import os
-from APICall import Searcher
+from geopy.geocoders import Nominatim
+from APICall import APISearcher
+
 
 class MiFrame(wx.Frame):
     def __init__(self, *args, **kwargs):
@@ -11,7 +13,7 @@ class MiFrame(wx.Frame):
                   'Guerrero', 'Hidalgo', 'Jalisco', 'México', 'Michoacán', 'Morelos', 'Nayarit', 'Nuevo León',
                   'Oaxaca', 'Puebla', 'Querétaro', 'Quintana Roo', 'San Luis Potosí', 'Sinaloa', 'Sonora', 'Tabasco',
                   'Tamaulipas', 'Tlaxcala', 'Veracruz', 'Yucatán', 'Zacatecas'
-        ] 
+        ]
 
 
         # Etiquetas ...
@@ -31,15 +33,15 @@ class MiFrame(wx.Frame):
 
         #ComboBox
         self.comboBox = wx.ComboBox(self,wx.ID_ANY,pos = (70,305),size = (180,25), choices = states ,style=wx.CB_READONLY)
-        self.comboBox.Bind(wx.EVT_COMBOBOX,self.onSelect)
-
 
         self.Centre(True)
         self.Show()
 
     def searchTweets(self,event):
-        stateSelection = self.comboBox.GetStringSelection();
-        print(stateSelection)
+        call = APISearcher()
+        stateSelection = self.comboBox.GetStringSelection()
+        tweets = call.Search(stateSelection,10);
+        self.result.AppendText(tweets)
 
     def saveTweets():
         print("Save")
@@ -47,6 +49,7 @@ class MiFrame(wx.Frame):
 
 if __name__ == '__main__':
     app = wx.App()
+    saveFile = open('tweetFile.txt', 'a', encoding='utf-8')
     fr = MiFrame(None, -1, "Twitter API", size=(500, 400))
     app.MainLoop()
 
