@@ -33,11 +33,12 @@ class APISearcher(object):
 		location = geolocator.geocode(geoCode)
 		return location
 
+ consumer_key = 'YOUR_COSTUMER_KEY'
+ consumer_secret = 'YOUR_COSTUMER_SECRET_KEY'
+ access_token = 'YOUR_ACCESS_TOKEN'
+ access_secret = 'YOUR_ACCESS_SECRET_TOKEN'
+ 
 
-consumer_key = "no2bqgDggX45CSpYALZl7k1Gq"
-consumer_secret = 'xjuPhPHgxUgBsuj2XOygxFQpe2ZtNWooolUlSSOAayd97xnpga'
-access_token = '991396655692890112-SGeKQWVyd23gi1fWKC5EfS9q0Dt9kSC'
-access_secret = '7AMgrXVhixngXY2Vrua6RwBl0L2OZjVfYjr9ue56RkjPB'
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 api = tweepy.API(auth)
